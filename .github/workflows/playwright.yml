@@ -1,17 +1,48 @@
-# MISSION 5 — Complete this workflow; submit a PR to trigger the quality gate.
+# MISSION 5 — PR quality gate: any failing Playwright test turns the check RED.
 name: CityBike E2E Quality Gate
 on:
   pull_request:
     branches: [main]
   push:
     branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   e2e:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v6
-      # TODO: set up Node.js 22
-      # TODO: install npm packages
-      # TODO: install Playwright Chromium and system dependencies
-      # TODO: execute tests; a failing test must fail the job
-      # TODO: upload the HTML report even when tests fail
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install npm packages (exact lockfile versions)
+        run: npm ci
+
+      - name: Install Playwright Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E tests
+        # Non-zero exit code on any failure -> job fails -> PR check is red.
+        run: npx playwright test
+        env:
+          CI: true
+
+      - name: Upload HTML report
+        if: ${{ !cancelled() }}   # runs even when the test step failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
