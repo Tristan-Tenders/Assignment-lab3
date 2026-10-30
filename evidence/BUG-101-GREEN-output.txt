@@ -1,0 +1,6 @@
+
+Running 1 test using 1 worker
+
+  ✓  1 tests/02-availability.spec.js:7:1 › BUG-101: available-only filter excludes zero-bike stations (793ms)
+
+  1 passed (2.1s)

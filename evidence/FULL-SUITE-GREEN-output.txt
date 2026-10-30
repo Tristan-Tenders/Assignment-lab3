@@ -1,0 +1,12 @@
+
+
+Running 6 tests using 2 workers
+
+  ✓  1 tests/01-smoke.spec.js:3:1 › dashboard loads with four stations (1.9s)
+  ✓  2 tests/02-availability.spec.js:7:1 › BUG-101: available-only filter excludes zero-bike stations (2.5s)
+  ✓  3 tests/01-smoke.spec.js:9:1 › search narrows station list (1.8s)
+  ✓  4 tests/03-reservation.spec.js:8:1 › invalid email blocks reservation (1.9s)
+  ✓  5 tests/04-outage.spec.js:6:1 › station API outage shows an error and retry restores results (1.4s)
+  ✓  6 tests/03-reservation.spec.js:28:1 › reservation sends correct payload and confirms booking (783ms)
+
+  6 passed (7.3s)

@@ -1,0 +1,40 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 tests/02-availability.spec.js:7:1 › BUG-101: available-only filter excludes zero-bike stations (6.0s)
+
+
+  1) tests/02-availability.spec.js:7:1 › BUG-101: available-only filter excludes zero-bike stations 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByTestId('station-card')
+    Expected: 3
+    Received: 4
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" getByTestId('station-card') with timeout 5000ms
+      - waiting for getByTestId('station-card')
+        14 × locator resolved to 4 elements
+           - unexpected value "4"
+
+
+      15 |   await page.getByRole('checkbox', { name: 'Available bikes only' }).check();
+      16 |
+    > 17 |   await expect(cards).toHaveCount(3);
+         |                       ^
+      18 |   await expect(page.getByRole('heading', { name: 'Riverside Park' })).toHaveCount(0);
+      19 |   await expect(page.getByText('3 stations')).toBeVisible();
+      20 | });
+        at tests/02-availability.spec.js:17:23
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/02-availability-BUG-101-av-43e2d-excludes-zero-bike-stations/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/02-availability-BUG-101-av-43e2d-excludes-zero-bike-stations/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/02-availability-BUG-101-av-43e2d-excludes-zero-bike-stations/trace.zip
+    Usage:
